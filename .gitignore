@@ -1,0 +1,13 @@
+# Personal config — never commit this
+config/settings.sh
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

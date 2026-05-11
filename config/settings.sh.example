@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# config/settings.sh.example
+# Copy this file to config/settings.sh and fill in your values.
+# settings.sh is gitignored so your personal paths are not committed.
+
+# ---------------------------------------------------------------------------
+# REQUIRED
+# ---------------------------------------------------------------------------
+
+# Absolute path to your Obsidian vault.
+# Windows (Git Bash): use forward-slash notation from the drive root, e.g.:
+#   VAULT_PATH="/c/Users/YourName/Nextcloud/Obsidian"
+# macOS:
+#   VAULT_PATH="/Users/YourName/Obsidian/MyVault"
+VAULT_PATH=""
+
+# ---------------------------------------------------------------------------
+# OPTIONAL — these have sensible defaults
+# ---------------------------------------------------------------------------
+
+# Subfolder inside the vault where topic notes live.
+# Default: Topics
+TOPICS_FOLDER="Topics"
+
+# Where to clone and install claude-vault.
+# Default: $HOME/claude-vault
+CLAUDE_VAULT_HOME="$HOME/claude-vault"
+
+# GitHub repo slug for claude-vault.
+# Change only if you use a fork.
+CLAUDE_VAULT_REPO="MarioPadilla/claude-vault"
+
+# ---------------------------------------------------------------------------
+# Windows Scheduled Task names
+# ---------------------------------------------------------------------------
+
+WATCHER_TASK_NAME="ClaudeVaultWatch"
+LINKER_TASK_NAME="ObsidianTopicLinker"
+COWORK_TASK_NAME="ClaudeVaultCoworkPeriodic"
