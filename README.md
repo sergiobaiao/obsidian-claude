@@ -335,3 +335,4 @@ obsidian-claude/
 
 - [claude-vault](https://github.com/MarioPadilla/claude-vault) by Mario Padilla — the core sync engine
 - Obsidian Second Brain pattern inspired by the Building a Second Brain methodology
+# obsidian-claude
