@@ -13,7 +13,9 @@ $shimDir = $ClaudeVaultHome
 function Register-ShimTask {
     param([string]$TaskName, [string]$ShimPath, [string]$Schedule, [int]$IntervalMinutes = 0)
 
-    $action = New-ScheduledTaskAction -Execute 'cmd.exe' -Argument ('/c "' + $ShimPath + '"')
+    # Run via powershell -WindowStyle Hidden so no console window flashes on screen
+    $psArgs = '-WindowStyle Hidden -NonInteractive -Command "& cmd.exe /c \"{0}\""' -f $ShimPath
+    $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument $psArgs
     $settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Hours 1)
 
     if ($Schedule -eq "ONLOGON") {
