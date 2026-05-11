@@ -23,13 +23,13 @@ if [ "$OS_DETECTED" = "windows" ]; then
   echo "Installing Windows .cmd shims..."
 
   # --- Vault watcher shim ---
+  # Note: uses --vault-path (vault root, not Conversations subfolder)
+  #       and calls the .exe directly to avoid activate.bat quoting issues.
   cat > "$CLAUDE_VAULT_HOME/run-claudevault-watch.cmd" << EOF
 @echo off
-cd /d "%USERPROFILE%\\claude-vault"
 set PYTHONUTF8=1
 set PYTHONIOENCODING=utf-8
-call "%USERPROFILE%\\claude-vault\\venv\\Scripts\\activate.bat"
-claude-vault watch "$VAULT_WIN\\Conversations"
+"%USERPROFILE%\\claude-vault\\venv\\Scripts\\claude-vault.exe" watch --vault-path "$VAULT_WIN"
 EOF
 
   # --- Topic linker shim ---
@@ -83,7 +83,7 @@ elif [ "$OS_DETECTED" = "mac" ]; then
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string><string>-lc</string>
-        <string>source $CLAUDE_VAULT_HOME/venv/bin/activate &amp;&amp; claude-vault watch "$VAULT_PATH/Conversations"</string>
+        <string>source $CLAUDE_VAULT_HOME/venv/bin/activate &amp;&amp; claude-vault watch --vault-path "$VAULT_PATH"</string>
     </array>
     <key>RunAtLoad</key><true/>
     <key>KeepAlive</key><true/>
