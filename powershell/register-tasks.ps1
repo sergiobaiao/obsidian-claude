@@ -8,14 +8,15 @@ param(
     [string]$ClaudeVaultHome = "$env:USERPROFILE\claude-vault"
 )
 
-$shimDir = $ClaudeVaultHome
+$shimDir    = $ClaudeVaultHome
+$vbsLauncher = "$ClaudeVaultHome\run-hidden.vbs"
 
 function Register-ShimTask {
     param([string]$TaskName, [string]$ShimPath, [string]$Schedule, [int]$IntervalMinutes = 0)
 
-    # Run via powershell -WindowStyle Hidden so no console window flashes on screen
-    $psArgs = '-WindowStyle Hidden -NonInteractive -Command "& cmd.exe /c \"{0}\""' -f $ShimPath
-    $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument $psArgs
+    # Use wscript.exe + run-hidden.vbs (SW_HIDE = 0) for truly invisible background tasks.
+    # powershell -WindowStyle Hidden is unreliable from Task Scheduler and still flashes a window.
+    $action   = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument "`"$vbsLauncher`" `"$ShimPath`""
     $settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Hours 1)
 
     if ($Schedule -eq "ONLOGON") {

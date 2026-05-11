@@ -52,6 +52,9 @@ call "%USERPROFILE%\\claude-vault\\venv\\Scripts\\activate.bat"
 claude-vault sync "%APPDATA%\\Claude\\local-agent-mode-sessions" --vault-path "$VAULT_WIN" --source code >> "%USERPROFILE%\\claude-vault\\cowork-periodic.log" 2>&1
 EOF
 
+  # Copy VBScript launcher (needed by register-tasks.ps1 for hidden execution)
+  cp "$REPO_DIR/shims/run-hidden.vbs" "$CLAUDE_VAULT_HOME/run-hidden.vbs"
+
   echo "Shims written. Registering scheduled tasks..."
 
   PS_SCRIPT="$(cygpath -w "$REPO_DIR/powershell/register-tasks.ps1")"
